@@ -7,6 +7,12 @@ namespace GildedRose.Tests
     public class TestAssemblyTests
     {
         [Fact]
+        public void Run_Main_Method()
+        {
+            Program.Main(new string[1]);
+        }
+        
+        [Fact]
         public void Test_Brie_Age_One_Day_Quality_Increases_By_One()
         {
             //Given
