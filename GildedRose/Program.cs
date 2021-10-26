@@ -64,10 +64,10 @@ namespace GildedRose
                 if (item.Name == "Aged Brie")
                 {
                     IncreaseQualityIfUnder50(item);
+                    DecreaseSellInByOne(item);
 
-                    item.SellIn = item.SellIn - 1;
-
-                    if (item.SellIn < 0){
+                    if (item.SellIn < 0)
+                    {
                         IncreaseQualityIfUnder50(item);
                     }
                 }
@@ -86,7 +86,7 @@ namespace GildedRose
                             }
                         }
                     }
-                    item.SellIn = item.SellIn - 1;
+                    DecreaseSellInByOne(item);
 
                     if (item.SellIn < 0){
                         item.Quality = 0;
@@ -114,6 +114,11 @@ namespace GildedRose
                     }
                 }
             }
+        }
+
+        private static void DecreaseSellInByOne(Item item)
+        {
+            item.SellIn = item.SellIn - 1;
         }
 
         private void IncreaseQualityIfUnder50(Item item)
