@@ -61,78 +61,63 @@ namespace GildedRose
         {
             foreach (var item in Items)
             {
-                if (item.Name == "Aged Brie")
-                {
+                if (item.Name == "Aged Brie"){
                     IncreaseQualityIfUnder50(item);
                     DecreaseSellInByOne(item);
-
-                    if (item.SellIn < 0)
-                    {
-                        IncreaseQualityIfUnder50(item);
-                    }
+                    if (item.SellIn < 0){IncreaseQualityIfUnder50(item);}
                 }
+
                 else if (item.Name == "Backstage passes to a TAFKAL80ETC concert"){
-                    if (item.Quality < 50)
-                    {
+                    if (item.Quality < 50){
                         IncreaseItemQualityByOne(item);
-
-                        if (item.SellIn < 11)
-                        {
+                        if (item.SellIn < 11){
                             IncreaseQualityIfUnder50(item);
-
-                            if (item.SellIn < 6)
-                            {
+                            if (item.SellIn < 6){
                                 IncreaseQualityIfUnder50(item);
                             }
                         }
                     }
                     DecreaseSellInByOne(item);
-
-                    if (item.SellIn < 0){
-                        item.Quality = 0;
-                    }
+                    if (item.SellIn < 0){item.Quality = 0;}
                 }
+
                 else if (item.Name == "Sulfuras, Hand of Ragnaros"){
                     item.Quality = item.Quality;
                     item.SellIn = item.SellIn;
                 }
-                else
-                {
-                    if (item.Quality > 0)
-                    {
-                        item.Quality = item.Quality - 1;
+
+                else if (item.Name.Contains("conjured", StringComparison.OrdinalIgnoreCase)){
+                    if (item.Quality > 0){ DecreaseItemQualityByX(item,2);}
+                    DecreaseSellInByOne(item);
+                    if (item.SellIn < 0){
+                        if (item.Quality > 0){
+                            DecreaseItemQualityByX(item,2);
+                        }
                     }
+                }
 
-                    item.SellIn = item.SellIn - 1;
-
-                    if (item.SellIn < 0)
-                    {
-                        if (item.Quality > 0)
-                        {
-                            item.Quality = item.Quality - 1;
+                else{
+                    if (item.Quality > 0){DecreaseItemQualityByX(item,1);}
+                   DecreaseSellInByOne(item);
+                    if (item.SellIn < 0){
+                        if (item.Quality > 0){
+                            DecreaseItemQualityByX(item,1);
                         }
                     }
                 }
             }
         }
 
-        private static void DecreaseSellInByOne(Item item)
-        {
-            item.SellIn = item.SellIn - 1;
-        }
-
-        private void IncreaseQualityIfUnder50(Item item)
-        {
-            if (item.Quality < 50)
-            {
+        private static void DecreaseSellInByOne(Item item){item.SellIn = item.SellIn - 1;}
+        private static void DecreaseItemQualityByX(Item item, int X){item.Quality = item.Quality - X;}
+        private void IncreaseItemQualityByOne(Item item){item.Quality++;}
+        private void IncreaseQualityIfUnder50(Item item){
+            if (item.Quality < 50){
                 IncreaseItemQualityByOne(item);
             }
         }
 
-        private void IncreaseItemQualityByOne(Item item)
-        {
-            item.Quality++;
-        }
+        
     }
 
     public class Item

@@ -244,5 +244,45 @@ namespace GildedRose.Tests
             Assert.Equal(0, app.Items[0].Quality);
             Assert.Equal(-1, app.Items[0].SellIn);
         }
+
+        [Fact]
+        public void Conjured_Items_Aged_One_Day_Quality_Goes_Two_Down_AND_Sellin_Goes_Down_By_One()
+        {
+            //Arrange
+            IList<Item> items = new List<Item>{
+                new Item { 
+                    Name = "Conjured Mana Cake",
+                    SellIn = 10,
+                    Quality = 20 }
+            };
+            var app = new Program(){Items = items}; 
+
+            //Act
+            app.UpdateQuality();
+
+            //Assert
+            Assert.Equal(18, app.Items[0].Quality);
+            Assert.Equal(9, app.Items[0].SellIn);
+        }
+
+        [Fact]
+        public void Conjured_Items_Aged_One_Day_With_Sellin_Date_0_Quality_Goes_With_Four()
+        {
+            //Given
+            IList<Item> items = new List<Item>{
+                new Item { 
+                    Name = "Conjured Mana Cake",
+                    SellIn = 0,
+                    Quality = 20 }
+            };
+            var app = new Program(){Items = items};
+            
+            //When
+            app.UpdateQuality();
+            
+            //Then
+            Assert.Equal(16, app.Items[0].Quality);
+            Assert.Equal(-1, app.Items[0].SellIn);
+        }
     }
 }
